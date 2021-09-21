@@ -1,15 +1,14 @@
-function Card({
-  apiData: {
-    full_name,
-    // owner: { avatar_url },
-    description,
-  },
-}) {
+function Card({ apiData }) {
   return (
     <div>
-      <h3>{full_name}</h3>
-      {/* <img src={avatar_url} alt="user-profile"></img> */}
-      <p>{description}</p>
+      {apiData.map((item) => (
+        <>
+          <h3>{item.full_name}</h3>
+          <img src={item.owner.avatar_url} alt="user-profile" />
+
+          <p>{item.description}</p>
+        </>
+      ))}
     </div>
   );
 }

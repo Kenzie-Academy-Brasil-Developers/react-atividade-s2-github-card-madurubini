@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "../Card";
 
 function Filter() {
   const [userInput, setUserInput] = useState("");
   const [apiData, setApiData] = useState([]);
 
-  useEffect(() => {
-    fetch("https://api.github.com/repos/facebook/react")
-      .then((response) => response.json())
-      .then((response) => setApiData(response))
-      .catch((err) => console.log(err));
-  });
+  function getData() {
+    const data = () => {
+      fetch(`https://api.github.com/repos/${userInput}`)
+        .then((response) => response.json())
+        .then((response) => setApiData([...apiData, response]))
+        .catch((err) => console.log(err));
+    };
+    return data;
+  }
 
   return (
     <div>
@@ -21,7 +24,7 @@ function Filter() {
         placeholder="Insira o repositório aqui"
       ></input>
 
-      <button onClick={() => console.log(apiData)}>Pesquisar</button>
+      <button onClick={getData()}>Pesquisar</button>
       <Card apiData={apiData} />
     </div>
   );
