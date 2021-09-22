@@ -1,0 +1,32 @@
+.Erro {
+  color: red;
+}
+
+.Formulario {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px;
+  justify-content: space-evenly;
+}
+
+.Formulario input {
+  width: 60%;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #846c5b;
+}
+
+button {
+  padding: 5px;
+  margin: 3px;
+  border-radius: 8px;
+  border: 1px solid #846c5b;
+  cursor: pointer;
+  color: #332e3c;
+  background-color: #c4b2bc;
+}
+
+button:hover {
+  filter: brightness(0.9);
+}

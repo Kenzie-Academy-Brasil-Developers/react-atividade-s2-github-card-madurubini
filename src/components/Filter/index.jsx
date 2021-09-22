@@ -1,31 +1,48 @@
 import { useState } from "react";
-import Card from "../Card";
+import axios from "axios";
+import "./style.css";
 
-function Filter() {
+function Filter({ setApiData, apiData }) {
   const [userInput, setUserInput] = useState("");
-  const [apiData, setApiData] = useState([]);
+  const [isError, setIsError] = useState(false);
 
   function getData() {
-    const data = () => {
-      fetch(`https://api.github.com/repos/${userInput}`)
-        .then((response) => response.json())
-        .then((response) => setApiData([...apiData, response]))
-        .catch((err) => console.log(err));
-    };
-    return data;
+    axios
+      .get(`https://api.github.com/repos/${userInput}`)
+      .then((response) => {
+        setIsError(false);
+        setApiData([...apiData, response]);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsError(true);
+      });
   }
 
   return (
     <div>
-      <input
-        type="text"
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
-        placeholder="Insira o repositório aqui"
-      ></input>
+      <div className="Formulario">
+        <input
+          type="text"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Ex.: owner/repository_name"
+        ></input>
+        <div className="Buttons">
+          <button onClick={() => getData()}>Pesquisar</button>
 
-      <button onClick={getData()}>Pesquisar</button>
-      <Card apiData={apiData} />
+          <button
+            onClick={() => {
+              setUserInput("");
+              setIsError(false);
+            }}
+          >
+            Limpar Filtro
+          </button>
+        </div>
+      </div>
+      {isError && <p className="Erro">Repositório não encontrado</p>}
     </div>
   );
 }
